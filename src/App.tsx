@@ -1,16 +1,40 @@
 import { FaBoltLightning } from "react-icons/fa6";
 import { GiWaterDrop } from "react-icons/gi";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import useGSAP from "@gsap/react";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+const animOptions = {
+  duration: 1,
+  ease: "power3.out",
+  stagger: 0.025,
+};
+const tooltipSelectors = [
+  {
+    trigger: 0.65,
+    elements: [
+      ".tooltip:nth-child(1) .icon",
+      ".tooltip:nth-child(1) .title .line > span",
+      ".tooltip:nth-child(1) .description .lilne > span",
+    ],
+  },
+  {
+    trigger: 0.85,
+    elements: [
+      ".tooltip:nth-child(2) .icon",
+      ".tooltip:nth-child(2) .title .line > span",
+      ".tooltip:nth-child(2) .description .lilne > span",
+    ],
+  },
+];
+
 const App = ({ children }: { children: ReactNode }) => {
-  const lenisRef = useRef();
+  const lenisRef = useRef<Lenis>(null);
 
   useEffect(() => {
     // Initialize Lenis
@@ -31,17 +55,73 @@ const App = ({ children }: { children: ReactNode }) => {
 
     // Add Lenis to GSAP ticker for better performance
     gsap.ticker.add((time) => {
-      lenisRef.current.raf(time * 1000);
+      lenisRef.current?.raf(time * 1000);
     });
 
     // Disable lag smoothing for better scroll sync
     gsap.ticker.lagSmoothing(0);
 
     return () => {
-      gsap.ticker.remove(lenisRef.current.raf);
+      gsap.ticker.remove(lenisRef.current?.raf);
       lenisRef.current?.destroy();
     };
   }, []);
+
+  useGSAP(() => {
+    const header1Split = new SplitText(".header-1 h1", {
+      type: "chars",
+      charsClass: "char",
+    });
+    const titleSplits = new SplitText(".tooltip .title h2", {
+      type: "lines",
+      linesClass: "line",
+    });
+    const descriptionSplits = new SplitText(".tooltip .description p", {
+      type: "lines",
+      linesClass: "line",
+    });
+
+    if (header1Split.chars) {
+      header1Split.chars.forEach((char) => {
+        if (char instanceof HTMLElement) {
+          char.innerHTML = `<span>${char.innerHTML}</span>`;
+        }
+      });
+    }
+    if (titleSplits.lines) {
+      titleSplits.lines.forEach((line) => {
+        if (line instanceof HTMLElement) {
+          line.innerHTML = `<span>${line.innerHTML}</span>`;
+        }
+      });
+    }
+    if (descriptionSplits.lines) {
+      descriptionSplits.lines.forEach((line) => {
+        if (line instanceof HTMLElement) {
+          line.innerHTML = `<span>${line.innerHTML}</span>`;
+        }
+      });
+    }
+
+    ScrollTrigger.create({
+      trigger: ".product-overview",
+      start: "75% bottom",
+      onEnter: () =>
+        gsap.to(".header-1 h1 .char > span", {
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          stagger: 0.025,
+        }),
+      onLeaveBack: () =>
+        gsap.to(".header-1 h1 .char > span", {
+          y: "100%",
+          duration: 1,
+          ease: "power3.out",
+          stagger: 0.025,
+        }),
+    });
+  });
   return (
     <>
       <section className="intro">
@@ -49,7 +129,7 @@ const App = ({ children }: { children: ReactNode }) => {
       </section>
       <section className="product-overview">
         <div className="header-1">
-          <h1>Store an endless supply of sand (or water)</h1>
+          <h1>Store an endless supply of water (or sand)</h1>
         </div>
         <div className="header-2">
           <h1>GOURD Bottle</h1>
@@ -93,7 +173,9 @@ const App = ({ children }: { children: ReactNode }) => {
 
         <div className="model-container">{children}</div>
       </section>
-      <section className="outro">Become Kazekage - GOURD</section>
+      <section className="outro">
+        <h1>Become Kazekage - GOURD</h1>
+      </section>
     </>
   );
 };

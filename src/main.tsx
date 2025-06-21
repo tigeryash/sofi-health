@@ -8,8 +8,8 @@ import App from "./App.tsx";
 createRoot(document.getElementById("root")!).render(
   <>
     <App>
-      {/* <Canvas
-        gl={{ antialias: true }}
+      <Canvas
+        gl={{ antialias: true, alpha: true }}
         shadows
         camera={{
           fov: 45,
@@ -18,7 +18,7 @@ createRoot(document.getElementById("root")!).render(
         }}
       >
         <Experience />
-      </Canvas> */}
+      </Canvas>
     </App>
     <Leva collapsed />
   </>
