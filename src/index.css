@@ -25,7 +25,7 @@ p {
 }
 
 section {
-  @apply relative w-[100vw] h-[100svh] bg-[#e0dfdf] text-[#0d0d0d] overflow-hidden;
+  @apply relative max-w-[100vw] h-[100svh] bg-[#e0dfdf] text-[#0d0d0d] overflow-hidden;
 }
 
 .intro,
@@ -34,7 +34,7 @@ section {
 }
 
 .model-container {
-  @apply absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full h-full z-100;
+  @apply absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full h-full -z-1;
 }
 
 .header-1 {
@@ -61,8 +61,7 @@ section {
 }
 
 .tooltips {
-  @apply absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]
-   w-[75%] h-[75%] flex gap-[15rem] lg:w-full lg:items-center lg:flex-col lg:gap-[2rem];
+  @apply absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[75%] h-[75%] flex gap-[15rem] lg:w-full lg:items-center lg:flex-col lg:gap-[2rem];
 }
 
 .tooltip {

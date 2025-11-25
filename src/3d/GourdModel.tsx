@@ -25,7 +25,7 @@ export function GourdModel() {
     "/gourd_bottle.glb"
   ) as unknown as GLTFResult;
   return (
-    <group dispose={null}>
+    <group dispose={null} rotation={[Math.PI/2,0,Math.PI/4]}>
       <group scale={0.01}>
         <group position={[-193.35, 39.65, -213.35]} rotation={[0.17, 0, 0]}>
           <group
