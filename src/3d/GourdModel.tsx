@@ -35,7 +35,7 @@ export function GourdModel({ rotation }: { rotation: [number, number, number] })
 		gsap.to(rotationProxy, {
 			y: Math.PI * 8, // Full rotation
 			scrollTrigger: {
-				trigger: scrollRef.current,
+				trigger: ".product-overview",
 				start: "top bottom",
 				end: "500% bottom",
 				scrub: 1,
