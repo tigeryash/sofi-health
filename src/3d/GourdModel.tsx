@@ -25,11 +25,32 @@ type GLTFResult = GLTF & {
 
 export function GourdModel({ rotation }: { rotation: [number, number, number] }) {
 	const { nodes, materials } = useGLTF("/gourd_bottle.glb") as unknown as GLTFResult;
+	console.log(rotation);
+	const scrollRef = useRef<THREE.Group>(null);
+
+	useGSAP(() => {
+		if (!scrollRef.current) return;
+		const rotationProxy = { y: 0 };
+
+		gsap.to(rotationProxy, {
+			y: Math.PI * 8, // Full rotation
+			scrollTrigger: {
+				trigger: scrollRef.current,
+				start: "top bottom",
+				end: "500% bottom",
+				scrub: 1,
+			},
+		});
+	});
 
 	return (
 		<group dispose={null}>
 			<group scale={0.01}>
-				<group position={[-193.35, 47.65, -200.35]} rotation={[0, 0, 0.64]}>
+				<group
+					position={[-193.35, 42.65, -200.35]}
+					rotation={[0, rotation[1], 0.64]}
+					ref={scrollRef}
+				>
 					<group position={[-8.69, 0.84, -3.3]} rotation={[-0.18, -0.09, -0.02]} scale={1.15}>
 						<mesh
 							castShadow

@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
-import Experience from "@/3d/Experience";
+import Experience from "./Experience";
 
-const Scene = () => {
+const Scene = ({ rotation }: { rotation: [number, number, number] }) => {
 	return (
 		<Canvas
 			gl={{ antialias: true, alpha: true }}
@@ -14,7 +14,7 @@ const Scene = () => {
 			}}
 			style={{ width: "100vw", height: "100svh" }}
 		>
-			<Experience />
+			<Experience rotation={rotation} />
 		</Canvas>
 	);
 };

@@ -13,21 +13,28 @@ const Overview = () => {
 		if (!scrollRef.current) return;
 		const rotationProxy = { y: 0 };
 
-		gsap
-			.timeline()
-			.to(scrollRef.current, {
-				scrollTrigger: {
-					trigger: scrollRef.current,
-					start: "top top",
-					end: "500% top",
-					scrub: 1,
-					pin: true,
+		gsap.timeline().to(scrollRef.current, {
+			scrollTrigger: {
+				trigger: scrollRef.current,
+				start: "top top",
+				end: "500% top",
+				scrub: 1,
+				pin: true,
+			},
+		});
+
+		gsap.to(rotationProxy, {
+			y: Math.PI * 8, // Full rotation
+			scrollTrigger: {
+				trigger: scrollRef.current,
+				start: "top bottom",
+				end: "500% bottom",
+				scrub: 1,
+				onUpdate: () => {
+					setRotation([0, rotationProxy.y, 0]);
 				},
-			})
-			.to(rotationProxy, {
-				y: 0,
-				duration: 1,
-			});
+			},
+		});
 	});
 	return (
 		<section ref={scrollRef} className="product-overview text-black z-1 pointer-events-none">
@@ -72,7 +79,7 @@ const Overview = () => {
 			</div>
 
 			<div className="model-container">
-				<Scene />
+				<Scene rotation={rotation} />
 			</div>
 		</section>
 	);

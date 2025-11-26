@@ -1,20 +1,12 @@
-import { Center, OrbitControls, useGLTF } from "@react-three/drei";
+import { Center, useGLTF } from "@react-three/drei";
 import { useControls } from "leva";
 import { GourdModel } from "./GourdModel";
 
-function Experience() {
+function Experience({ rotation }: { rotation: [number, number, number] }) {
 	const { color } = useControls({
 		color: "#000",
 	});
 
-	const { rotation } = useControls({
-		rotation: {
-			value: [0, 0, 0],
-			min: -Math.PI,
-			max: Math.PI,
-			step: 0.01,
-		},
-	});
 	return (
 		<>
 			{/* <OrbitControls /> */}
