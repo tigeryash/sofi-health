@@ -60,12 +60,12 @@ const App = () => {
 				onEnter: () =>
 					gsap.to(header1Split.chars, {
 						y: 0,
-						animationOptions: animOptions,
+						...animOptions,
 					}),
 				onLeaveBack: () =>
 					gsap.to(header1Split.chars, {
 						y: "100%",
-						animationOptions: animOptions,
+						...animOptions,
 					}),
 			});
 			return () => {

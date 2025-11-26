@@ -1,13 +1,23 @@
-import { Center, useGLTF } from "@react-three/drei";
+import { Center, OrbitControls, useGLTF } from "@react-three/drei";
 import { useControls } from "leva";
 import { GourdModel } from "./GourdModel";
 
 function Experience() {
 	const { color } = useControls({
-		color: "transparent",
+		color: "#000",
+	});
+
+	const { rotation } = useControls({
+		rotation: {
+			value: [0, 0, 0],
+			min: -Math.PI,
+			max: Math.PI,
+			step: 0.01,
+		},
 	});
 	return (
 		<>
+			{/* <OrbitControls /> */}
 			<color attach="background" args={[color]} />
 			<directionalLight
 				intensity={1}
@@ -15,10 +25,10 @@ function Experience() {
 				castShadow
 				shadow-mapSize={[1024, 1024]}
 			/>
-			<directionalLight intensity={0.5} position={[-2, 0, -2]} />
-			<ambientLight intensity={0.2} />
+			{/* <directionalLight intensity={1} position={[-193.35, 60.65, -207.35]} /> */}
+			<ambientLight intensity={1} />
 			<Center>
-				<GourdModel />
+				<GourdModel rotation={rotation} />
 			</Center>
 		</>
 	);

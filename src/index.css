@@ -25,7 +25,7 @@ p {
 }
 
 section {
-  @apply relative max-w-[100vw] h-[100svh] bg-[#e0dfdf] text-[#0d0d0d] overflow-hidden;
+  @apply relative w-[100vw] h-[100svh] bg-[#e0dfdf] text-[#0d0d0d] overflow-hidden;
 }
 
 .intro,

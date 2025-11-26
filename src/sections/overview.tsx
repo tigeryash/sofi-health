@@ -1,10 +1,36 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useRef, useState } from "react";
 import { FaBoltLightning } from "react-icons/fa6";
 import { GiWaterDrop } from "react-icons/gi";
 import Scene from "../3d/Scene";
 
 const Overview = () => {
+	const scrollRef = useRef<HTMLDivElement>(null);
+	const [rotation, setRotation] = useState<[number, number, number]>([0, 0, 0]);
+
+	useGSAP(() => {
+		if (!scrollRef.current) return;
+		const rotationProxy = { y: 0 };
+
+		gsap
+			.timeline()
+			.to(scrollRef.current, {
+				scrollTrigger: {
+					trigger: scrollRef.current,
+					start: "top top",
+					end: "500% top",
+					scrub: 1,
+					pin: true,
+				},
+			})
+			.to(rotationProxy, {
+				y: 0,
+				duration: 1,
+			});
+	});
 	return (
-		<section className="product-overview text-black">
+		<section ref={scrollRef} className="product-overview text-black z-1 pointer-events-none">
 			<div className="header-1">
 				<h1>Store an endless supply of water (or sand)</h1>
 			</div>
