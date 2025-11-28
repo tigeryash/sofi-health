@@ -1,49 +1,81 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef, useState } from "react";
+import { SplitText } from "gsap/SplitText";
+import { useRef } from "react";
 import { FaBoltLightning } from "react-icons/fa6";
 import { GiWaterDrop } from "react-icons/gi";
 import Scene from "../3d/Scene";
 
 const Overview = () => {
 	const scrollRef = useRef<HTMLDivElement>(null);
-	const [rotation, setRotation] = useState<[number, number, number]>([0, 0, 0]);
+	const textRef = useRef<HTMLHeadingElement>(null);
 
-	useGSAP(() => {
-		if (!scrollRef.current) return;
-		const rotationProxy = { y: 0 };
+	useGSAP(
+		() => {
+			if (!scrollRef.current || !textRef.current) return;
 
-		gsap.timeline().to(scrollRef.current, {
-			scrollTrigger: {
-				trigger: scrollRef.current,
-				start: "top top",
-				end: "500% top",
-				scrub: 1,
-				pin: true,
-			},
-		});
+			const split = new SplitText(textRef.current, {
+				type: "chars",
+				mask: "chars",
+			});
 
-		gsap.to(rotationProxy, {
-			y: Math.PI * 8, // Full rotation
-			scrollTrigger: {
-				trigger: scrollRef.current,
-				start: "top bottom",
-				end: "500% bottom",
-				scrub: 1,
-				onUpdate: () => {
-					setRotation([0, rotationProxy.y, 0]);
+			gsap.set(split.chars, { y: 250 });
+
+			const tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: scrollRef.current,
+					start: "top top",
+					end: "500% top",
+					scrub: 1,
+					pin: true,
 				},
-			},
-		});
-	});
+			});
+
+			gsap.to(split.chars, {
+				y: 0,
+				stagger: 0.05,
+				duration: 1,
+				ease: "power2.out",
+				scrollTrigger: {
+					trigger: scrollRef.current,
+					start: "top 40%", // When top of container hits 40% of viewport
+					end: "top top", // Defining the scroll zone
+
+					// toggleActions: "onEnter onLeave onEnterBack onLeaveBack"
+					// play: animate to y:0
+					// reverse: animate back to y:250
+					toggleActions: "play none none",
+					onLeaveBack: () => {
+						gsap.to(split.chars, {
+							y: 250,
+							stagger: 0.05,
+							duration: 1,
+							ease: "power2.out",
+						});
+					},
+				},
+			});
+		},
+		{ scope: scrollRef }
+	);
+
 	return (
-		<section ref={scrollRef} className="product-overview text-black z-1 pointer-events-none">
-			<div className="header-1">
-				<h1>Store an endless supply of water (or sand)</h1>
+		<section
+			ref={scrollRef}
+			className="product-overview text-black z-1 pointer-events-none relative flex justify-center items-center"
+		>
+			<div
+				className="absolute inset-0 flex items-center pointer-events-none"
+				style={{ width: "200%" }}
+			>
+				<h1
+					ref={textRef}
+					className="text-[8rem] md:text-[12rem] lg:text-[16rem]! font-bold text-amber-900 whitespace-nowrap leading-none px-10 will-change-transform"
+				>
+					Store an endless supply of water (or sand)
+				</h1>
 			</div>
-			<div className="header-2">
-				<h1>GOURD Bottle</h1>
-			</div>
+			<h1>GOURD Bottle</h1>
 
 			<div className="circular-mask"></div>
 
@@ -52,7 +84,7 @@ const Overview = () => {
 					<div className="icon">
 						<FaBoltLightning />
 					</div>
-					<div className="divider"></div>
+					<div className="divider" />
 					<div className="title">
 						<h2>#1 Defense</h2>
 					</div>
@@ -68,7 +100,7 @@ const Overview = () => {
 					<div className="icon">
 						<GiWaterDrop />
 					</div>
-					<div className="divider"></div>
+					<div className="divider" />
 					<div className="title">
 						<h2>Hydration</h2>
 					</div>
@@ -79,7 +111,7 @@ const Overview = () => {
 			</div>
 
 			<div className="model-container">
-				<Scene rotation={rotation} />
+				<Scene />
 			</div>
 		</section>
 	);

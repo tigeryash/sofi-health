@@ -1,32 +1,33 @@
 import { useGSAP } from "@gsap/react";
 import { useGLTF } from "@react-three/drei";
 import gsap from "gsap";
-import { useRef } from "react";
+import { useControls } from "leva";
+import { useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTF } from "three-stdlib";
 
 type GLTFResult = GLTF & {
 	nodes: {
 		Cylinder026_cork_0: THREE.Mesh;
-		Line013_goard_main_0: THREE.Mesh;
-		Cylinder025_string_guard_0: THREE.Mesh;
-		Cylinder024_top_string_0: THREE.Mesh;
-		Cylinder023_bot_string_0: THREE.Mesh;
 		Cylinder028_top_string_0: THREE.Mesh;
+		Cylinder023_bot_string_0: THREE.Mesh;
+		Cylinder024_top_string_0: THREE.Mesh;
+		Cylinder025_string_guard_0: THREE.Mesh;
+		Line013_goard_main_0: THREE.Mesh;
 	};
 	materials: {
 		cork: THREE.MeshStandardMaterial;
-		goard_main: THREE.MeshStandardMaterial;
-		string_guard: THREE.MeshStandardMaterial;
 		top_string: THREE.MeshStandardMaterial;
 		bot_string: THREE.MeshStandardMaterial;
+		string_guard: THREE.MeshStandardMaterial;
+		goard_main: THREE.MeshStandardMaterial;
 	};
 };
 
-export function GourdModel({ rotation }: { rotation: [number, number, number] }) {
-	const { nodes, materials } = useGLTF("/gourd_bottle.glb") as unknown as GLTFResult;
-	console.log(rotation);
+export function GourdModel() {
+	const { nodes, materials } = useGLTF("/gourd.glb") as unknown as GLTFResult;
 	const scrollRef = useRef<THREE.Group>(null);
+	const [rotation, setRotation] = useState<[number, number, number]>([0, 0, 0]);
 
 	useGSAP(() => {
 		if (!scrollRef.current) return;
@@ -37,74 +38,106 @@ export function GourdModel({ rotation }: { rotation: [number, number, number] })
 			scrollTrigger: {
 				trigger: ".product-overview",
 				start: "top bottom",
-				end: "500% bottom",
+				end: "600% top",
 				scrub: 1,
+				onUpdate: () => {
+					setRotation([0, rotationProxy.y, 0]);
+				},
 			},
+			ease: "none",
 		});
 	});
 
+	const { x, z, y } = useControls({
+		x: { value: -2.6, min: -10, max: 1, step: 0.01 },
+		z: { value: 0.0, min: -1, max: 1, step: 0.01 },
+		y: { value: 0.0, min: -1, max: 1, step: 0.01 },
+	});
+
 	return (
-		<group dispose={null}>
-			<group scale={0.01}>
-				<group
-					position={[-193.35, 42.65, -200.35]}
-					rotation={[0, rotation[1], 0.64]}
-					ref={scrollRef}
-				>
-					<group position={[-8.69, 0.84, -3.3]} rotation={[-0.18, -0.09, -0.02]} scale={1.15}>
-						<mesh
-							castShadow
-							receiveShadow
-							geometry={nodes.Line013_goard_main_0.geometry}
-							material={materials.goard_main}
-						/>
-						<mesh
-							castShadow
-							receiveShadow
-							geometry={nodes.Cylinder025_string_guard_0.geometry}
-							material={materials.string_guard}
-							position={[7.27, 11.77, 0.01]}
-							rotation={[-Math.PI / 2, 1.16, 0]}
-						/>
-						<mesh
-							castShadow
-							receiveShadow
-							geometry={nodes.Cylinder024_top_string_0.geometry}
-							material={materials.top_string}
-							position={[-0.06, -1.73, -0.04]}
-							rotation={[-Math.PI / 2, 0, 0]}
-							scale={1.45}
-						/>
-						<mesh
-							castShadow
-							receiveShadow
-							geometry={nodes.Cylinder023_bot_string_0.geometry}
-							material={materials.bot_string}
-							position={[-0.06, -2.71, -0.04]}
-							rotation={[-Math.PI / 2, 0, 0]}
-							scale={1.45}
-						/>
+		<group dispose={null} rotation={rotation} position={[x, y, z]} ref={scrollRef}>
+			<group>
+				<group rotation={[-Math.PI / 2, -0.087, 0]}>
+					<group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+						<group>
+							<group position={[4.794, -7.344, 2.864]} rotation={[0.175, 0, 0]}>
+								<group
+									position={[-6.96, 25.893, -7.544]}
+									rotation={[-1.745, 0.087, 0]}
+									scale={0.614}
+								>
+									<mesh
+										castShadow
+										receiveShadow
+										geometry={nodes.Cylinder026_cork_0.geometry}
+										material={materials.cork}
+										position={[6.278, -0.112, -31.279]}
+									/>
+								</group>
+								<group position={[2.255, 6.283, -5.055]}>
+									<mesh
+										castShadow
+										receiveShadow
+										geometry={nodes.Cylinder028_top_string_0.geometry}
+										material={materials.top_string}
+										position={[-7.049, 0.452, 0.959]}
+									/>
+								</group>
+								<group
+									position={[-8.689, 0.838, -3.299]}
+									rotation={[-0.175, -0.086, -0.015]}
+									scale={1.145}
+								>
+									<group
+										position={[-0.055, -2.712, -0.044]}
+										rotation={[-Math.PI / 2, 0, 0]}
+										scale={1.446}
+									>
+										<mesh
+											castShadow
+											receiveShadow
+											geometry={nodes.Cylinder023_bot_string_0.geometry}
+											material={materials.bot_string}
+											position={[2.34, 0.026, 5.502]}
+										/>
+									</group>
+									<group
+										position={[-0.055, -1.73, -0.044]}
+										rotation={[-Math.PI / 2, 0, 0]}
+										scale={1.446}
+									>
+										<mesh
+											castShadow
+											receiveShadow
+											geometry={nodes.Cylinder024_top_string_0.geometry}
+											material={materials.top_string}
+											position={[2.34, 0.026, 4.822]}
+										/>
+									</group>
+									<group position={[7.266, 11.77, 0.005]} rotation={[-Math.PI / 2, 1.162, 0]}>
+										<mesh
+											castShadow
+											receiveShadow
+											geometry={nodes.Cylinder025_string_guard_0.geometry}
+											material={materials.string_guard}
+											position={[4.422, 0.086, -6.21]}
+										/>
+									</group>
+									<mesh
+										castShadow
+										receiveShadow
+										geometry={nodes.Line013_goard_main_0.geometry}
+										material={materials.goard_main}
+										position={[3.327, 5.243, -0.081]}
+									/>
+								</group>
+							</group>
+						</group>
 					</group>
-					<mesh
-						castShadow
-						receiveShadow
-						geometry={nodes.Cylinder026_cork_0.geometry}
-						material={materials.cork}
-						position={[-6.96, 25.89, -7.54]}
-						rotation={[-1.75, 0.09, 0]}
-						scale={0.61}
-					/>
-					<mesh
-						castShadow
-						receiveShadow
-						geometry={nodes.Cylinder028_top_string_0.geometry}
-						material={materials.top_string}
-						position={[2.25, 6.28, -5.06]}
-					/>
 				</group>
 			</group>
 		</group>
 	);
 }
 
-useGLTF.preload("/gourd_bottle.glb");
+useGLTF.preload("/gourd.glb");

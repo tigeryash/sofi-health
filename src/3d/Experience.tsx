@@ -1,8 +1,8 @@
-import { Center, useGLTF } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { useControls } from "leva";
 import { GourdModel } from "./GourdModel";
 
-function Experience({ rotation }: { rotation: [number, number, number] }) {
+function Experience() {
 	const { color } = useControls({
 		color: "#000",
 	});
@@ -19,9 +19,7 @@ function Experience({ rotation }: { rotation: [number, number, number] }) {
 			/>
 			{/* <directionalLight intensity={1} position={[-193.35, 60.65, -207.35]} /> */}
 			<ambientLight intensity={1} />
-			<Center>
-				<GourdModel rotation={rotation} />
-			</Center>
+			<GourdModel />
 		</>
 	);
 }
