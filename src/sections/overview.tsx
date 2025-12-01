@@ -32,10 +32,10 @@ const Overview = () => {
 			});
 
 			gsap.to(split.chars, {
-				y: 0,
-				stagger: 0.05,
-				duration: 1,
-				ease: "power2.out",
+				// y: 0,
+				// stagger: 0.05,
+				// duration: 1,
+				// ease: "power2.out",
 				scrollTrigger: {
 					trigger: scrollRef.current,
 					start: "top 40%", // When top of container hits 40% of viewport
