@@ -33,9 +33,9 @@ const Overview = () => {
 
 			gsap.to(split.chars, {
 				y: 0,
-				stagger: 0.05,
-				duration: 1,
-				ease: "power2.out",
+				stagger: 0.02,
+				duration: 0.4,
+				ease: "power2.inOut",
 				scrollTrigger: {
 					trigger: scrollRef.current,
 					start: "top 40%", // When top of container hits 40% of viewport
@@ -46,17 +46,17 @@ const Overview = () => {
 					onEnter: () => {
 						gsap.to(split.chars, {
 							y: 0,
-							stagger: 0.05,
-							duration: 0.5,
-							ease: "power2.out",
+							stagger: 0.02,
+							duration: 0.4,
+							ease: "power2.inOut",
 						});
 					},
 					onLeaveBack: () => {
 						gsap.to(split.chars, {
 							y: 250,
-							stagger: 0.05,
-							duration: 0.5,
-							ease: "power2.out",
+							stagger: 0.02,
+							duration: 0.4,
+							ease: "power2.inOut",
 						});
 					},
 				},
@@ -68,7 +68,7 @@ const Overview = () => {
 					x: "-115%",
 					ease: "power3.out",
 				},
-				"+0"
+				"+0.02"
 			);
 
 			tl.to(
@@ -77,7 +77,7 @@ const Overview = () => {
 					scale: 2,
 					ease: "none",
 				},
-				"<+0"
+				"<80%"
 			);
 		},
 		{ scope: scrollRef }
