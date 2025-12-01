@@ -40,21 +40,45 @@ const Overview = () => {
 					trigger: scrollRef.current,
 					start: "top 40%", // When top of container hits 40% of viewport
 					end: "top top", // Defining the scroll zone
-
 					// toggleActions: "onEnter onLeave onEnterBack onLeaveBack"
 					// play: animate to y:0
 					// reverse: animate back to y:250
-					toggleActions: "play none none",
+					onEnter: () => {
+						gsap.to(split.chars, {
+							y: 0,
+							stagger: 0.05,
+							duration: 0.5,
+							ease: "power2.out",
+						});
+					},
 					onLeaveBack: () => {
 						gsap.to(split.chars, {
 							y: 250,
 							stagger: 0.05,
-							duration: 1,
+							duration: 0.5,
 							ease: "power2.out",
 						});
 					},
 				},
 			});
+
+			tl.to(
+				textRef.current,
+				{
+					x: "-115%",
+					ease: "power3.out",
+				},
+				"+0"
+			);
+
+			tl.to(
+				".circular-mask",
+				{
+					scale: 2,
+					ease: "none",
+				},
+				"<+0"
+			);
 		},
 		{ scope: scrollRef }
 	);
@@ -72,12 +96,24 @@ const Overview = () => {
 					ref={textRef}
 					className="text-[8rem] md:text-[12rem] lg:text-[16rem]! font-bold text-amber-900 whitespace-nowrap leading-none px-10 will-change-transform"
 				>
-					Store an endless supply of water (or sand)
+					it all starts with a grain of sand
 				</h1>
 			</div>
+			<div className="circular-mask"></div>
+
 			<h1>GOURD Bottle</h1>
 
-			<div className="circular-mask"></div>
+			<div>
+				<p>
+					The gord was designed to store a refreshing supply of water (or sand). convenient to
+					travel with from village to village.
+				</p>
+
+				<p>
+					With a durable design and easy-to-use features, the gourd bottle is the perfect companion
+					for any ninja.
+				</p>
+			</div>
 
 			<div className="tooltips">
 				<div className="tooltip">

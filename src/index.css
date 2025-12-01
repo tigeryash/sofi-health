@@ -56,7 +56,7 @@ section {
 }
 
 .circular-mask {
-  @apply absolute top-[0%] left-[0%] bg-[#0d0d0d] w-full h-full;
+  @apply absolute top-[0%] left-[0%] bg-[#e0dfdf] w-full h-full;
   clip-path: circle(0% at 50% 50%);
 }
 
