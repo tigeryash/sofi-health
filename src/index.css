@@ -10,6 +10,9 @@ h1 {
   font-weight: 500;
   line-height: 1;
 }
+.char {
+  padding: 10px 0px;
+}
 
 h2 {
   font-size: 3rem;
@@ -56,7 +59,7 @@ section {
 }
 
 .circular-mask {
-  @apply absolute top-[0%] left-[0%] bg-[#e0dfdf] w-full h-full;
+  @apply absolute top-[0%] left-[0%] bg-[#e0dfdf] w-full h-full z-2;
   clip-path: circle(0% at 50% 50%);
 }
 

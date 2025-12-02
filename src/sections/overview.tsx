@@ -17,6 +17,7 @@ const Overview = () => {
 			const split = new SplitText(textRef.current, {
 				type: "chars",
 				mask: "chars",
+				charsClass: "char",
 			});
 
 			gsap.set(split.chars, { y: 250 });
@@ -74,7 +75,7 @@ const Overview = () => {
 			tl.to(
 				".circular-mask",
 				{
-					scale: 2,
+					clipPath: "circle(100% at 50% 50%)",
 					ease: "none",
 				},
 				"<80%"
@@ -94,7 +95,7 @@ const Overview = () => {
 			>
 				<h1
 					ref={textRef}
-					className="text-[8rem] md:text-[12rem] lg:text-[16rem]! font-bold text-amber-900 whitespace-nowrap leading-none px-10 will-change-transform"
+					className="text-[8rem] md:text-[12rem] lg:text-[16rem]! font-bold  text-amber-900 whitespace-nowrap leading-none px-10 will-change-transform"
 				>
 					it all starts with a grain of sand
 				</h1>
