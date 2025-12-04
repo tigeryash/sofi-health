@@ -1,7 +1,7 @@
 const Intro = () => {
 	return (
 		<section className="intro">
-			<h1>GOURD doesn't lose. It wins.</h1>
+			<h1>Feel Refreshed</h1>
 		</section>
 	);
 };

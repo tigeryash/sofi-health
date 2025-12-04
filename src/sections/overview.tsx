@@ -9,10 +9,11 @@ import Scene from "../3d/Scene";
 const Overview = () => {
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const textRef = useRef<HTMLHeadingElement>(null);
+	const textRef2 = useRef<HTMLHeadingElement>(null);
 
 	useGSAP(
 		() => {
-			if (!scrollRef.current || !textRef.current) return;
+			if (!scrollRef.current || !textRef.current || !textRef2.current) return;
 
 			const split = new SplitText(textRef.current, {
 				type: "chars",
@@ -21,8 +22,9 @@ const Overview = () => {
 			});
 
 			gsap.set(split.chars, { y: 250 });
+			gsap.set(textRef2.current, { x: "110%" });
 
-			const tl = gsap.timeline({
+			gsap.to(scrollRef.current, {
 				scrollTrigger: {
 					trigger: scrollRef.current,
 					start: "top top",
@@ -62,24 +64,40 @@ const Overview = () => {
 					},
 				},
 			});
-
-			tl.to(
-				textRef.current,
-				{
-					x: "-101%",
-					ease: "power2.out",
+			gsap.to(textRef.current, {
+				x: "-101%",
+				ease: "linear",
+				duration: 1,
+				scrollTrigger: {
+					trigger: scrollRef.current,
+					start: "top top",
+					end: "100% top",
+					scrub: 1,
 				},
-				"+0.02"
-			);
+			});
 
-			tl.to(
-				".circular-mask",
-				{
-					clipPath: "circle(100% at 50% 50%)",
-					ease: "power4.inOut",
+			gsap.to(".circular-mask", {
+				clipPath: "circle(100% at 50% 50%)",
+				ease: "power4.in",
+				scrollTrigger: {
+					trigger: scrollRef.current,
+					start: "top top",
+					end: "110% top",
+					scrub: 1,
 				},
-				"<-.0001"
-			);
+			});
+
+			gsap.to(textRef2.current, {
+				x: "-101%",
+				ease: "linear",
+				scrollTrigger: {
+					trigger: scrollRef.current,
+					start: "120% top",
+					end: "190% bottom",
+					scrub: 1,
+					markers: true,
+				},
+			});
 		},
 		{ scope: scrollRef }
 	);
@@ -101,8 +119,17 @@ const Overview = () => {
 				</h1>
 			</div>
 			<div className="circular-mask"></div>
-
-			<h1>GOURD Bottle</h1>
+			<div
+				className="absolute inset-0 flex items-center pointer-events-none"
+				style={{ width: "200%" }}
+			>
+				<h1
+					ref={textRef2}
+					className="text-[8rem] md:text-[12rem] lg:text-[16rem]! font-bold  text-black whitespace-nowrap leading-none px-10 will-change-transform"
+				>
+					gourd bottle
+				</h1>
+			</div>
 
 			<div>
 				<p>
@@ -116,7 +143,7 @@ const Overview = () => {
 				</p>
 			</div>
 
-			<div className="tooltips">
+			<div className="tooltips text-black">
 				<div className="tooltip">
 					<div className="icon">
 						<FaBoltLightning />
