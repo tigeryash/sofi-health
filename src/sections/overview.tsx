@@ -48,8 +48,8 @@ const Overview = () => {
 						gsap.to(split.chars, {
 							y: 0,
 							stagger: 0.02,
-							duration: 0.4,
-							ease: "power2.inOut",
+							duration: 1,
+							ease: "power2.out",
 						});
 					},
 					onLeaveBack: () => {
@@ -66,8 +66,8 @@ const Overview = () => {
 			tl.to(
 				textRef.current,
 				{
-					x: "-115%",
-					ease: "power3.out",
+					x: "-101%",
+					ease: "power2.out",
 				},
 				"+0.02"
 			);
@@ -76,9 +76,9 @@ const Overview = () => {
 				".circular-mask",
 				{
 					clipPath: "circle(100% at 50% 50%)",
-					ease: "none",
+					ease: "power4.inOut",
 				},
-				"<80%"
+				"<-.0001"
 			);
 		},
 		{ scope: scrollRef }

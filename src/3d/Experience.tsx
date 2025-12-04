@@ -10,7 +10,6 @@ function Experience() {
 	return (
 		<>
 			{/* <OrbitControls /> */}
-			<color attach="background" args={[color]} />
 			<directionalLight
 				intensity={1}
 				position={[1, 2, -3]}

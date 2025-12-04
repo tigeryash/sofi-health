@@ -10,9 +10,10 @@ const Scene = () => {
 				fov: 45,
 				near: 0.1,
 				far: 200,
-				position: [-2.7, 0, 1],
+				position: [-2.58, 0, 1],
 				rotation: [0, -0, 0.3],
 			}}
+			style={{ background: "transparent" }}
 		>
 			<Experience />
 		</Canvas>

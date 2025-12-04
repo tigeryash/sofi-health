@@ -28,7 +28,7 @@ p {
 }
 
 section {
-  @apply relative max-w-screen h-[100svh] bg-[#e0dfdf] text-[#0d0d0d] overflow-hidden;
+  @apply relative max-w-screen h-[100svh] bg-[#0d0d0d] text-[#0d0d0d] overflow-hidden;
 }
 
 .intro,
@@ -59,7 +59,7 @@ section {
 }
 
 .circular-mask {
-  @apply absolute top-[0%] left-[0%] bg-[#e0dfdf] w-full h-full z-2;
+  @apply absolute top-[0%] left-[0%] bg-[#e0e0e0] w-full h-full -z-2;
   clip-path: circle(0% at 50% 50%);
 }
 
