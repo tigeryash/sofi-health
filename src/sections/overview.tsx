@@ -20,32 +20,25 @@ const Overview = () => {
 				mask: "chars",
 				charsClass: "char",
 			});
-
-			gsap.set(split.chars, { y: 250 });
-			gsap.set(textRef2.current, { x: "110%" });
-
-			gsap.to(scrollRef.current, {
-				scrollTrigger: {
-					trigger: scrollRef.current,
-					start: "top top",
-					end: "500% top",
-					scrub: 1,
-					pin: true,
-				},
+			const lineSplit = new SplitText(".text1", {
+				type: "lines",
+				mask: "lines",
+			});
+			const lineSplit2 = new SplitText(".text2", {
+				type: "lines",
+				mask: "lines",
 			});
 
+			gsap.set(split.chars, { y: 250 });
+			gsap.set(lineSplit.lines, { y: -20 });
+			gsap.set(lineSplit2.lines, { y: 20 });
+			gsap.set(textRef2.current, { x: "140%" });
+
 			gsap.to(split.chars, {
-				// y: 0,
-				// stagger: 0.05,
-				// duration: 1,
-				// ease: "power2.out",
 				scrollTrigger: {
 					trigger: scrollRef.current,
-					start: "top 40%", // When top of container hits 40% of viewport
-					end: "top top", // Defining the scroll zone
-					// toggleActions: "onEnter onLeave onEnterBack onLeaveBack"
-					// play: animate to y:0
-					// reverse: animate back to y:250
+					start: "top 40%",
+					end: "top top",
 					onEnter: () => {
 						gsap.to(split.chars, {
 							y: 0,
@@ -64,41 +57,120 @@ const Overview = () => {
 					},
 				},
 			});
-			gsap.to(textRef.current, {
-				x: "-101%",
-				ease: "linear",
-				duration: 1,
+
+			gsap.to(lineSplit.lines, {
 				scrollTrigger: {
 					trigger: scrollRef.current,
 					start: "top top",
-					end: "100% top",
-					scrub: 1,
+					onEnter: () => {
+						gsap.to(lineSplit.lines, {
+							y: 0,
+							stagger: 0.07,
+							duration: 0.67,
+							ease: "power2.out",
+						});
+					},
+					onLeaveBack: () => {
+						gsap.to(lineSplit.lines, {
+							y: -20,
+							stagger: 0.02,
+							duration: 0.5,
+							ease: "power2.inOut",
+						});
+					},
 				},
 			});
 
-			gsap.to(".circular-mask", {
-				clipPath: "circle(100% at 50% 50%)",
-				ease: "power4.in",
+			gsap.to(lineSplit2.lines, {
 				scrollTrigger: {
 					trigger: scrollRef.current,
 					start: "top top",
-					end: "110% top",
-					scrub: 1,
+					onEnter: () => {
+						gsap.to(lineSplit2.lines, {
+							y: 0,
+							stagger: 0.07,
+							duration: 0.67,
+							ease: "power2.out",
+						});
+					},
+					onLeaveBack: () => {
+						gsap.to(lineSplit2.lines, {
+							y: 20,
+							stagger: 0.02,
+							duration: 0.5,
+							ease: "power2.inOut",
+						});
+					},
 				},
 			});
 
-			gsap.to(textRef2.current, {
-				x: "-101%",
-				ease: "linear",
+			const tl = gsap.timeline({
 				scrollTrigger: {
 					trigger: scrollRef.current,
-					start: "120% top",
-					end: "190% bottom",
+					start: "top top",
+					end: "500% top",
 					scrub: 1,
-					markers: true,
+					pin: true,
 				},
 			});
+
+			tl.to(textRef.current, {
+				x: "-101%",
+				ease: "linear",
+				duration: 0.15,
+			});
+
+			tl.to(
+				lineSplit.lines,
+				{
+					opacity: 0,
+					ease: "power2.out",
+					duration: 0.02,
+				},
+				">-.06"
+			);
+
+			tl.to(
+				lineSplit2.lines,
+				{
+					opacity: 0,
+					ease: "power2.out",
+					duration: 0.02,
+				},
+				"<"
+			);
+
+			tl.to(
+				".circular-mask",
+				{
+					clipPath: "circle(71% at 50% 50%)",
+					ease: "linear",
+					duration: 0.05,
+				},
+				">-.02"
+			);
+
+			tl.to(
+				textRef2.current,
+				{
+					x: "-101%",
+					ease: "linear",
+					duration: 0.05,
+				},
+				">.-0.1"
+			);
+
+			tl.to(
+				".divider",
+				{
+					scaleX: "100%",
+					duration: 0.05,
+					ease: "power4.out",
+				},
+				">-.007"
+			);
 		},
+
 		{ scope: scrollRef }
 	);
 
@@ -113,7 +185,8 @@ const Overview = () => {
 			>
 				<h1
 					ref={textRef}
-					className="text-[8rem] md:text-[12rem] lg:text-[16rem]! font-bold  text-amber-900 whitespace-nowrap leading-none px-10 will-change-transform"
+					className="text-[8rem] md:text-[12rem] lg:text-[16rem]! font-bold  text-amber-900 whitespace-nowrap leading-none 
+					px-10 will-change-transform -z-2"
 				>
 					it all starts with a grain of sand
 				</h1>
@@ -125,19 +198,26 @@ const Overview = () => {
 			>
 				<h1
 					ref={textRef2}
-					className="text-[8rem] md:text-[12rem] lg:text-[16rem]! font-bold  text-black whitespace-nowrap leading-none px-10 will-change-transform"
+					className="text-[8rem] md:text-[12rem] lg:text-[16rem]! font-bold  text-black whitespace-nowrap leading-none px-10 
+					will-change-transform -z-2"
 				>
 					gourd bottle
 				</h1>
 			</div>
 
-			<div>
-				<p>
+			<div className="text-white relative w-full h-full flex flex-col justify-center items-center">
+				<p
+					className="will-change-transform md:text-[3rem] lg:text-[4rem] self-start w-[25vw] text-[.9rem]! font-medium absolute 
+				top-[15%] left-[10.5%] text1"
+				>
 					The gord was designed to store a refreshing supply of water (or sand). convenient to
 					travel with from village to village.
 				</p>
 
-				<p>
+				<p
+					className="will-change-transform md:text-[3rem] lg:text-[4rem] self-end w-[25vw] text-[.9rem]! font-medium absolute bottom-[16%] right-[8%] 
+				text2"
+				>
 					With a durable design and easy-to-use features, the gourd bottle is the perfect companion
 					for any ninja.
 				</p>
@@ -164,7 +244,7 @@ const Overview = () => {
 					<div className="icon">
 						<GiWaterDrop />
 					</div>
-					<div className="divider" />
+					<div className="divider " />
 					<div className="title">
 						<h2>Hydration</h2>
 					</div>

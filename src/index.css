@@ -64,11 +64,11 @@ section {
 }
 
 .tooltips {
-  @apply absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[75%] h-[75%] flex gap-[15rem] lg:items-center lg:flex-col lg:gap-[2rem];
+  @apply absolute w-full h-full flex gap-[15rem] lg:flex-col lg:gap-[2rem];
 }
 
 .tooltip {
-  @apply flex flex-1 flex-col gap-[.5rem] text-[#e0dfdf] lg:w-[85%];
+  @apply flex flex-1 flex-col gap-[.5rem] text-black lg:w-full px-20;
 }
 
 .tooltip:nth-child(2) {
@@ -76,7 +76,7 @@ section {
 }
 
 .tooltip .divider {
-  @apply relative w-full h-[1px] bg-[#5f5f5f] my-[.5rem] lg:w-[70%];
+  @apply relative w-full h-[1px] bg-[#5f5f5f] my-[.5rem] lg:w-[50%];
   transform: scaleX(0);
 }
 
@@ -94,12 +94,15 @@ section {
 
 .tooltip .description {
   color: #5f5f5f;
+  width: 40%;
 }
 
 .tooltip:nth-child(2) .icon,
 .tooltip:nth-child(2) .title,
-.tooltip .description {
-  width: 75%;
+.tooltip:nth-child(2) .description {
+  width: 40%;
+  text-align: right;
+  margin-left: auto;
 }
 
 .header-1 h1 .char,
