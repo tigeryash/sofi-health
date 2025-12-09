@@ -29,10 +29,26 @@ const Overview = () => {
 				mask: "lines",
 			});
 
+			const icon = new SplitText(".icon", {
+				type: "lines",
+				mask: "lines",
+			});
+
+			const lineSplit3 = new SplitText(".description", {
+				type: "lines",
+				mask: "lines",
+			});
+			const lineSplit4 = new SplitText(".title", {
+				type: "lines",
+				mask: "lines",
+			});
+
 			gsap.set(split.chars, { y: 250 });
 			gsap.set(lineSplit.lines, { y: -20 });
 			gsap.set(lineSplit2.lines, { y: 20 });
 			gsap.set(textRef2.current, { x: "140%" });
+			gsap.set(lineSplit3.lines, { y: 20 });
+			gsap.set(lineSplit4.lines, { y: 45 });
 
 			gsap.to(split.chars, {
 				scrollTrigger: {
@@ -169,6 +185,36 @@ const Overview = () => {
 				},
 				">-.007"
 			);
+
+			tl.from(
+				icon.lines,
+				{
+					y: 90,
+					ease: "power2.out",
+					duration: 0.02,
+				},
+				"<.005"
+			);
+
+			tl.to(
+				lineSplit4.lines,
+				{
+					y: 0,
+					ease: "power2.out",
+					duration: 0.02,
+				},
+				"<.005"
+			);
+
+			tl.to(
+				lineSplit3.lines,
+				{
+					y: 0,
+					ease: "power2.out",
+					duration: 0.02,
+				},
+				"<.005"
+			);
 		},
 
 		{ scope: scrollRef }
@@ -242,7 +288,7 @@ const Overview = () => {
 
 				<div className="tooltip">
 					<div className="icon">
-						<GiWaterDrop />
+						<GiWaterDrop className="ml-auto" />
 					</div>
 					<div className="divider " />
 					<div className="title">

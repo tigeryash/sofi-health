@@ -1,7 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import { useGLTF } from "@react-three/drei";
 import gsap from "gsap";
-import { useControls } from "leva";
 import { useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTF } from "three-stdlib";
@@ -48,14 +47,8 @@ export function GourdModel() {
 		});
 	});
 
-	const { x, z, y } = useControls({
-		x: { value: -2.6, min: -10, max: 1, step: 0.01 },
-		z: { value: 0.0, min: -1, max: 1, step: 0.01 },
-		y: { value: 0.0, min: -1, max: 1, step: 0.01 },
-	});
-
 	return (
-		<group dispose={null} rotation={rotation} position={[x, y, z]} ref={scrollRef}>
+		<group dispose={null} rotation={rotation} position={[-2.6, 0.0, 0.0]} ref={scrollRef}>
 			<group>
 				<group rotation={[-Math.PI / 2, -0.087, 0]}>
 					<group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
