@@ -1,12 +1,6 @@
-import { useGLTF } from "@react-three/drei";
-import { useControls } from "leva";
 import { GourdModel } from "./GourdModel";
 
 function Experience() {
-	const { color } = useControls({
-		color: "#000",
-	});
-
 	return (
 		<>
 			{/* <OrbitControls /> */}
@@ -24,5 +18,3 @@ function Experience() {
 }
 
 export default Experience;
-
-useGLTF.preload("/gourd_bottle.glb");
