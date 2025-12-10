@@ -47,7 +47,7 @@ const Overview = () => {
 			gsap.set(lineSplit.lines, { y: -20 });
 			gsap.set(lineSplit2.lines, { y: 20 });
 			gsap.set(textRef2.current, { x: "140%" });
-			gsap.set(lineSplit3.lines, { y: 20 });
+			gsap.set(lineSplit3.lines, { y: 22 });
 			gsap.set(lineSplit4.lines, { y: 45 });
 			gsap.set(".circular-mask", { clipPath: "circle(0% at 50% 50%)" });
 
