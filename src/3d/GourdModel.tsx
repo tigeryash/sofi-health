@@ -26,17 +26,12 @@ type GLTFResult = GLTF & {
 
 export function GourdModel() {
 	const gl = useThree((state) => state.gl);
-	const { nodes, materials, scene } = useGLTF(
-		"/gourd_compressed.glb",
-		undefined,
-		undefined,
-		(loader) => {
-			const ktx2loader = new KTX2Loader();
-			ktx2loader.setTranscoderPath("https://cdn.jsdelivr.net/gh/pmndrs/drei-assets/basis/");
-			ktx2loader.detectSupport(gl);
-			loader.setKTX2Loader(ktx2loader);
-		}
-	) as unknown as GLTFResult;
+	const { scene } = useGLTF("/gourd_compressed.glb", undefined, undefined, (loader) => {
+		const ktx2loader = new KTX2Loader();
+		ktx2loader.setTranscoderPath("https://cdn.jsdelivr.net/gh/pmndrs/drei-assets/basis/");
+		ktx2loader.detectSupport(gl);
+		loader.setKTX2Loader(ktx2loader);
+	}) as unknown as GLTFResult;
 
 	const scrollRef = useRef<THREE.Group>(null);
 	const [rotation, setRotation] = useState<[number, number, number]>([0, 0, 0]);
